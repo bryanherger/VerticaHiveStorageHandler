@@ -111,13 +111,17 @@ public class JdbcStorageHandler implements HiveStorageHandler, HiveStoragePredic
         jobProperties.put(DBConfiguration.INPUT_FIELD_NAMES_PROPERTY, columnNames);
         jobProperties.put(DBConfiguration.OUTPUT_FIELD_NAMES_PROPERTY, columnNames);
 
-        String prefix = (DBConfiguration.DRIVER_CLASS_PROPERTY.startsWith("mapreduce") ? "mapreduce" : "mapred");
         for(String key : tblProps.stringPropertyNames()) {
             if(key.startsWith("mapred.jdbc.")) {
                 String value = tblProps.getProperty(key);
-                key = key.replace("mapred", prefix);
                 LOG.info("JSH key = "+key+", value = "+value);
                 jobProperties.put(key, value);
+                String key2 = key.replace("mapred.", "mapreduce.");
+                if (!key.equalsIgnoreCase(key2))
+                {
+                    LOG.info("JSH key = "+key2+", value = "+value);
+                    jobProperties.put(key2, value);
+                }
             }
         }
     }
