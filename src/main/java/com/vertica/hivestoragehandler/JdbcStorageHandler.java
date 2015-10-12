@@ -98,7 +98,7 @@ public class JdbcStorageHandler implements HiveStorageHandler, HiveStoragePredic
 
     private void configureJobProperties(TableDesc tableDesc, Map<String, String> jobProperties) {
         if(LOG.isDebugEnabled()) {
-            LOG.debug("tabelDesc: " + tableDesc);
+            LOG.debug("tableDesc: " + tableDesc);
             LOG.debug("jobProperties: " + jobProperties);
         }
 
@@ -116,6 +116,7 @@ public class JdbcStorageHandler implements HiveStorageHandler, HiveStoragePredic
             if(key.startsWith("mapred.jdbc.")) {
                 String value = tblProps.getProperty(key);
                 key = key.replace("mapred", prefix);
+                LOG.info("JSH key = "+key+", value = "+value);
                 jobProperties.put(key, value);
             }
         }
