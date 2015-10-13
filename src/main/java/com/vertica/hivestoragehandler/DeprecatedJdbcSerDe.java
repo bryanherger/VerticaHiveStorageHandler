@@ -35,8 +35,8 @@ import org.apache.hadoop.io.Writable;
 /**
  * Serialize/Deserialize a tuple.
  */
-public class JdbcSerDe implements SerDe {
-    private static final Log LOG = LogFactory.getLog(JdbcSerDe.class);
+public class DeprecatedJdbcSerDe implements SerDe {
+    private static final Log LOG = LogFactory.getLog(DeprecatedJdbcSerDe.class);
 
     private DbRecordWritable cachedWritable;
 
@@ -45,7 +45,7 @@ public class JdbcSerDe implements SerDe {
     private StructObjectInspector objectInspector;
     private List<Object> deserializeCache;
 
-    public JdbcSerDe() {}
+    public DeprecatedJdbcSerDe() {}
 
     @Override
     public void initialize(Configuration sysConf, Properties tblProps) throws SerDeException {

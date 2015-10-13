@@ -45,11 +45,12 @@ public class VerticaSerDe implements SerDe {
     private StructObjectInspector objectInspector;
     private List<Object> deserializeCache;
 
-    public VerticaSerDe() {}
+    public VerticaSerDe() {
+    }
 
     @Override
     public void initialize(Configuration sysConf, Properties tblProps) throws SerDeException {
-        if(LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
             LOG.debug("tblProps: " + tblProps);
         }
 
@@ -66,7 +67,7 @@ public class VerticaSerDe implements SerDe {
         this.fieldCount = types.length;
 
         final List<ObjectInspector> fieldOIs = new ArrayList<ObjectInspector>(columnTypes.length);
-        for(int i = 0; i < types.length; i++) {
+        for (int i = 0; i < types.length; i++) {
             ObjectInspector oi = HiveJdbcBridgeUtils.getObjectInspector(types[i], columnTypes[i]);
             fieldOIs.add(oi);
         }
@@ -92,15 +93,15 @@ public class VerticaSerDe implements SerDe {
     public DbRecordWritable serialize(Object row, ObjectInspector inspector) throws SerDeException {
         final StructObjectInspector structInspector = (StructObjectInspector) inspector;
         final List<? extends StructField> fields = structInspector.getAllStructFieldRefs();
-        if(fields.size() != fieldCount) {
+        if (fields.size() != fieldCount) {
             throw new SerDeException(String.format("Required %d columns, received %d.", fieldCount, fields.size()));
         }
 
         cachedWritable.clear();
 
-        for(int i = 0; i < fieldCount; i++) {
+        for (int i = 0; i < fieldCount; i++) {
             StructField structField = fields.get(i);
-            if(structField != null) {
+            if (structField != null) {
                 Object field = structInspector.getStructFieldData(row, structField);
                 ObjectInspector fieldOI = structField.getFieldObjectInspector();
                 Object javaObject = HiveJdbcBridgeUtils.deparseObject(field, fieldOI);
@@ -117,16 +118,20 @@ public class VerticaSerDe implements SerDe {
      */
     @Override
     public Object deserialize(Writable record) throws SerDeException {
-        if(!(record instanceof DbRecordWritable)) {
-            throw new SerDeException("Expected DbTupleWritable, received "
+        if (!(record instanceof VerticaRecord)) {
+            throw new SerDeException("Expected VerticaRecord, received "
                     + record.getClass().getName());
         }
-        DbRecordWritable tuple = (DbRecordWritable) record;
+        VerticaRecord tuple = (VerticaRecord) record;
         deserializeCache.clear();
 
-        for(int i = 0; i < fieldCount; i++) {
-            Object o = tuple.get(i);
-            deserializeCache.add(o);
+        for (int i = 0; i < fieldCount; i++) {
+            try {
+                Object o = tuple.get(i);
+                deserializeCache.add(o);
+            } catch (Exception e) {
+                throw new SerDeException(e);
+            }
         }
 
         return deserializeCache;
