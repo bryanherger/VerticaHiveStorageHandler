@@ -30,6 +30,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Arrays;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.DataInputBuffer;
 import org.apache.hadoop.io.DataOutputBuffer;
@@ -58,6 +60,8 @@ import org.apache.hadoop.util.StringUtils;
  * @see VerticaOutputFormat#setOutput(Job, String, boolean, String...)
  */
 public class VerticaConfiguration {
+    private static final Log LOG = LogFactory.getLog("com.vertica.hadoop");
+
 	/** JDBC logging level default */
 	public static final String LOG_LEVEL_PROP_DEFAULT = "0";
 	
@@ -295,6 +299,7 @@ public class VerticaConfiguration {
 	public static final int defaultBatchSize = 10000;
 
 	public VerticaConfiguration(Configuration conf) {
+		LOG.info("VerticaConfiguration: "+conf);
 		this.conf = conf;
 	}
 
