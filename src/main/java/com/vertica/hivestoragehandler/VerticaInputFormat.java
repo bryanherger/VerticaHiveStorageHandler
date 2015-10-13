@@ -62,7 +62,7 @@ public class VerticaInputFormat implements InputFormat<LongWritable, VerticaReco
 			inputQuery = config.getInputQuery();
 
         if (inputQuery == null)
-            inputQuery = jobConf.get("hive.input.query");
+            inputQuery = jobConf.get("hive.query.string");
 
         if (inputQuery == null)
 			throw new IOException("Vertica input requires query defined by "
