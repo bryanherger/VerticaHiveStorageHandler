@@ -64,8 +64,17 @@ public class VerticaInputFormat implements InputFormat<LongWritable, VerticaReco
         if (inputQuery == null)
             inputQuery = jobConf.get("hive.query.string");
 
+        LOG.info("inputQuery = "+inputQuery);
         // hack for now.  we'll figure out input/output table translation later
-        inputQuery = "select * from wikiOutTable";
+        //inputQuery = "select * from wikiOutTable";
+        // replace hive table name with vertica table name (if set)
+        String hTableName = jobConf.get(VerticaConfiguration.HIVE_HIVE_TABLE_NAME_PROP);
+        String vTableName = jobConf.get(VerticaConfiguration.HIVE_VERTICA_TABLE_NAME_PROP);
+        if (hTableName != null && vTableName != null)
+        {
+            inputQuery = inputQuery.replace(hTableName, vTableName);
+            LOG.info("rewritten inputQuery = "+inputQuery);
+        }
 
         if (inputQuery == null)
 			throw new IOException("Vertica input requires query defined by "

@@ -118,7 +118,13 @@ public class VerticaConfiguration {
 	/** Output table name */
 	public static final String OUTPUT_TABLE_NAME_PROP = "mapred.vertica.output.table.name";
 
-	/** Definition of output table types */
+    /** Hive Input table name */
+    public static final String HIVE_VERTICA_TABLE_NAME_PROP = "mapred.vertica.verticatable";
+
+    /** Hive Output table name */
+    public static final String HIVE_HIVE_TABLE_NAME_PROP = "mapred.vertica.hivetable";
+
+    /** Definition of output table types */
 	public static final String OUTPUT_TABLE_DEF_PROP = "mapred.vertica.output.table.def";
 
 	/** Whether to drop tables */
