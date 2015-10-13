@@ -34,7 +34,10 @@ public class JdbcInputFormat extends DBInputFormat<DbRecordWritable> {
      */
     @Override
     public void configure(JobConf jobConf) {
-        // delay for TableJobProperties is set to the jobConf
+        if(!jobConfSet) {
+            super.configure(jobConf);
+            this.jobConfSet = true;
+        }
     }
 
     @Override
