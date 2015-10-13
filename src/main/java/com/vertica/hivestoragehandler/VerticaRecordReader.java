@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapred.InputSplit;
@@ -13,6 +15,7 @@ import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.TaskAttemptContext;
 
 public class VerticaRecordReader implements RecordReader<LongWritable, VerticaRecord> {
+	private static final Log LOG = LogFactory.getLog("com.vertica.hadoop");
 	ResultSet results = null;
 	int nColumns = 0;
 	long start = 0;
@@ -70,7 +73,12 @@ public class VerticaRecordReader implements RecordReader<LongWritable, VerticaRe
 
 	@Override
 	public VerticaRecord createValue() {
-		return new VerticaRecord();
+		try {
+			return new VerticaRecord(results);
+		} catch (SQLException e) {
+			LOG.error(e);
+			return null;
+		}
 	}
 
 	@Override

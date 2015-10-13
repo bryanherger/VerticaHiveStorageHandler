@@ -83,7 +83,6 @@ public class VerticaInputSplit implements Writable, InputSplit {
 
   /** (@inheritDoc) */
   public void configure(Configuration conf) throws Exception {
-    LOG.info("Input split configured with: "+conf);
     vtconfig = new VerticaConfiguration(conf);
     connection = vtconfig.getConnection(false);
     connection.setAutoCommit(true);
