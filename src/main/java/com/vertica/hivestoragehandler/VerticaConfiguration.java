@@ -23,12 +23,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Arrays;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -300,6 +295,12 @@ public class VerticaConfiguration {
 
 	public VerticaConfiguration(Configuration conf) {
 		LOG.info("VerticaConfiguration: "+conf);
+        //for (String confKey : conf.)
+        Iterator t = conf.iterator();
+        while (t.hasNext())
+        {
+            LOG.info(t.next());
+        }
 		this.conf = conf;
 	}
 
