@@ -43,11 +43,7 @@ public class JdbcInputFormat extends DBInputFormat<DbRecordWritable> {
     @Override
     public RecordReader<LongWritable, DbRecordWritable> getRecordReader(InputSplit split, JobConf jobConf, Reporter reporter)
             throws IOException {
-        if(!jobConfSet) {
-            super.configure(jobConf);
-            this.jobConfSet = true;
-        }
-        return super.getRecordReader(split, jobConf, reporter);
+        return null;//new VerticaRecordReader(split, jobConf, reporter);
     }
 
     @Override

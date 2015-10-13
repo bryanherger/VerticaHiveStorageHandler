@@ -38,6 +38,7 @@ import org.apache.hadoop.hive.serde2.SerDe;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.mapred.InputFormat;
+import org.apache.hadoop.mapred.OutputFormat;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.lib.db.DBConfiguration;
 
@@ -136,20 +137,20 @@ public class JdbcStorageHandler implements HiveStorageHandler, HiveStoragePredic
      */
     @SuppressWarnings("rawtypes")
     @Override
-    public Class<? extends InputFormat<? extends WritableComparable, ? extends Writable>> getInputFormatClass() {
-        return JdbcInputFormat.class;
+    public Class<? extends InputFormat> getInputFormatClass() {
+        return VerticaInputFormat.class;
     }
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Class<? extends HiveOutputFormat> getOutputFormatClass() {
+    public Class<? extends OutputFormat> getOutputFormatClass() {
         // NOTE that must return subclass of HiveOutputFormat
-        return JdbcOutputFormat.class;
+        return VerticaOutputFormat.class;
     }
 
     @Override
     public Class<? extends SerDe> getSerDeClass() {
-        return JdbcSerDe.class;
+        return VerticaSerDe.class;
     }
 
     /**
