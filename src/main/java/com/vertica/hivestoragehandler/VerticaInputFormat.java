@@ -171,7 +171,7 @@ public class VerticaInputFormat implements InputFormat<LongWritable, VerticaReco
 		}
 
 		LOG.debug("returning " + splits.size() + " final splits");
-		return (InputSplit[]) splits.toArray();
+		return splits.toArray(new InputSplit[splits.size()]);
 	}
 
 	@Override
