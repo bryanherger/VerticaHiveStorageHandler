@@ -6,7 +6,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.ByteBuffer;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Date;
@@ -112,7 +111,7 @@ public class VerticaRecord implements Writable {
 		Connection conn = config.getConnection(true);
 
 		DatabaseMetaData dbmd = conn.getMetaData();
-		Relation vTable = new Relation(outTable);
+		VerticaRelation vTable = new VerticaRelation(outTable);
 		
 		names = new Vector<String>();
 		types = new Vector<Integer>();

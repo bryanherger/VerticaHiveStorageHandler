@@ -1,13 +1,13 @@
 /* Copyright (c) 2005 - 2012 Vertica, an HP company -*- Java -*- */
 package com.vertica.hivestoragehandler;
 
-public class Relation {
+public class VerticaRelation {
 	private String table = null;
 	private String schema = null;
 	private String database = null;
 	private boolean defSchema = false;
 
-	public Relation(String name) {
+	public VerticaRelation(String name) {
 		if (name == null) return;
 
 		String[] splut = name.split("\\.");

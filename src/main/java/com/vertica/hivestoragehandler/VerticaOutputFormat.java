@@ -101,7 +101,7 @@ public class VerticaOutputFormat implements OutputFormat<Text, VerticaRecord> {
 	}
 
 	public static void checkOutputSpecs(VerticaConfiguration vtconfig) throws IOException {
-		Relation vTable = new Relation(vtconfig.getOutputTableName());
+		VerticaRelation vTable = new VerticaRelation(vtconfig.getOutputTableName());
 		if (vTable.isNull())
 		  throw new IOException("Vertica output requires a table name defined by "
 			  + VerticaConfiguration.OUTPUT_TABLE_NAME_PROP);
@@ -177,7 +177,7 @@ public class VerticaOutputFormat implements OutputFormat<Text, VerticaRecord> {
 		Connection conn = vtconfig.getConnection(true);
 
 		// TODO: consider more tables and skip tables with non-temp projections 
-		Relation vTable = new Relation(vtconfig.getOutputTableName());
+		VerticaRelation vTable = new VerticaRelation(vtconfig.getOutputTableName());
 		Statement stmt = conn.createStatement();
 		ResultSet rs = null;
 	    HashSet<String> tablesWithTemp = new HashSet<String>();

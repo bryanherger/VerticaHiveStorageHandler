@@ -34,7 +34,7 @@ import org.apache.hadoop.mapred.Reporter;
 public class VerticaRecordWriter implements RecordWriter<Text, VerticaRecord> {
   	private static final Log LOG = LogFactory.getLog("com.vertica.hadoop");
 	
-	Relation vTable = null;
+	VerticaRelation vTable = null;
 	String schemaName = null;
 	Connection connection = null;
 	PreparedStatement statement = null;
@@ -47,7 +47,7 @@ public class VerticaRecordWriter implements RecordWriter<Text, VerticaRecord> {
 		this.connection = conn;
 		batchSize = batch;
     
-		vTable = new Relation(writerTable);
+		vTable = new VerticaRelation(writerTable);
  
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO ");
